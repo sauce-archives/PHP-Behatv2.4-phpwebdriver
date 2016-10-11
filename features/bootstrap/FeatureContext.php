@@ -23,7 +23,7 @@ class FeatureContext extends BehatContext
         $feature_name = $event->getScenario()->getFeature()->gettitle();
 
         $host = sprintf(
-            'http://%s:%s@ondemand.saucelabs.com/wd/hub',
+            'https://%s:%s@ondemand.saucelabs.com:443/wd/hub',
             $username,
             $access_key
         );
@@ -68,9 +68,9 @@ class FeatureContext extends BehatContext
     public function iShouldBeOnANewPage()
     {
         $title = $this->driver->getTitle();
-         PHPUnit_Framework_Assert::assertEquals($title, "I am another page title - Sauce Labs"); 
+         PHPUnit_Framework_Assert::assertEquals($title, "I am another page title - Sauce Labs");
     }
-    
+
 
 
     /** @AfterScenario */
@@ -89,7 +89,7 @@ class FeatureContext extends BehatContext
         $this->modifySauceJob(
             sprintf(
                 '{"passed": %s}',
-                $result           
+                $result
             ),
             $jobId
         );
@@ -97,7 +97,7 @@ class FeatureContext extends BehatContext
         print "SauceOnDemandSessionID=".$jobId." job-name=".$feature_name." - ".$scenario_name;
     }
 
-    public function getSessionId($event) 
+    public function getSessionId($event)
     {
         $scenario = $event instanceof ScenarioEvent ? $event->getScenario() : $event->getOutline();
         $context = $event->getContext();
